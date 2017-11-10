@@ -1,4 +1,5 @@
-Welcome to my journey on learning more about the world of Cyber Security!
+## Welcome Stranger
+Welcome to my journey on learning more about the world of Security!
 
 I thought I'd put my attempt on learning security on github, cause why not.
 I'll be tackling wargames and CTFs here. Enjoy my struggles.
