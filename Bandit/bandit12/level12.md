@@ -1,0 +1,35 @@
+## Bandit Level 12 -> Level 13
+The file is mentioned to be a hexdump, which we can confirm by looking inside. That’s where we start. The rest can be found out by repeatedly using the file command.
+- ssh bandit12@bandit.labs.overthewire.org -p 2220
+- ls
+- xxd -r data.txt bdata.txt
+    - Turns the hexdump to a binary
+- file bdata.txt
+    - gzip file
+- mv bdata.txt bdata.gz
+- gzip -d bdata.gz
+- file bdata
+    - bzip2 file
+- bzip2 -d bdata
+- file bdata.out
+    - gzip file
+- mv bdata.out bdata.gz
+- gzip -d bdata.gz
+- file bdata
+    - tar file
+- tar -xvf bdata
+- file data5.bin
+    - tar file
+- tar -xvf data5.bin
+- file data6.bin
+    - bzip2 file
+- bzip2 -d data6.bin
+- file data6.bin.out
+    - tar file
+- tar -xvf data6.bin.out
+- mv data8.bin data8.gz
+- gzip -d data8
+- file data8
+    - txt file
+- cat data8
+    - 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
