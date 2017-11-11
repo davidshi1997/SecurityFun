@@ -1,0 +1,12 @@
+## Natas Level 7 → Level 8
+- Go to url: http://natas7.natas.labs.overthewire.org
+    - User: natas7
+    - Password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9
+- There are two links to Home and About
+- In the source code, a hint says that the password for webuser is in /etc/natas_webpass/natas8
+    - Attempting to go there, apparently the page doesn’t exist
+- Trying to go to a different page puts index.php?page=[$randompage] at the end to get it using php
+- Putting garbage in it shows us that it’s getting the pages from /var/www/natas/natas7/index.php
+    - Apparently /etc/natas_webpass/natas8
+- Go to http://natas7.natas.labs.overthewire.org/index.php?page=/etc/natas_webpass/natas8
+    - DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe

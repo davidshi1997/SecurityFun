@@ -1,0 +1,18 @@
+## Natas Level 11 → Level 12
+- Go to url: http://natas11.natas.labs.overthewire.org
+    - User: Natas11
+    - Password: U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
+- There’s some source code to look through…
+    - It’s slightly longer than previous levels, but there are a number of things that stand out
+        - The cookie on the page is set here, saving showpassword and bgcolor
+        - The cookie is encrypted with XOR, and also 
+            - This XOR key is hidden
+- First, we need to extract a XOR key
+    - We take a little peek at the Cookie using EditThisCookie
+    - Write a program decoding a key from the found Cookie (decodeXOR.php)
+        - qw8J
+- Next, we need to make a new cookie to put in place of the old one that has showpassword == “yes”
+    - Write a program, and encode a new cookie (encodeCookie.php)
+        - ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK
+- Edit the cookie using EditThisCookie to the newly generated one
+    - EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3

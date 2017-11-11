@@ -1,0 +1,11 @@
+## Natas Level 2 → Level 3
+- Go to url: http://natas2.natas.labs.overthewire.org
+    - User: natas2
+    - Password: ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
+- The text says there’s nothing on the page
+- Open source code to see if there are any links or anything on the page
+    - There is a pixel.png that implies there’s a directory inside of the page
+- Go to /files/pixel.png and find nothing on the page
+- Go to /files and notice users.txt on the page
+    - Contains a number of users and their passwords as well as…
+    - sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14

