@@ -1,0 +1,167 @@
+PicoCTF Level 1 Walkthroughs
+
+Forensics
+Digital Camoflague
+- Password stored in captured network data
+- Find POST command with pass: dEo2NFpxYmRMdw%3D%3D
+- From the % stuffz, you can tell this is HTML encoded
+- This decodes to: dEo2NFpxYmRMdw==
+- From the ending ==, you can tell this is base64 encoded
+- This decodes to:
+- tJ64ZqbdLw
+Special Agent User
+- Looking for Browser data inside of packets
+- Browser data is stored in the User-Agent field of HTTP protocol
+- Looking through the HTTP requests, several are wget (linux protocol for fetching webpages)
+- Finally, we find: User-Agent: Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36\r\n
+- This format implies Chrome
+- Chrome 35.0.2117.157
+
+
+Cryptography
+keyz
+- This is just setting up ssh directly into the picoctf server
+- cd to the folder in the browser at: ~/.ssh/authorized_keys
+- Copy the key from own computer at your own keys dir
+- ssh into the proper place
+- who_needs_pwords_anyways
+Substitute
+- This is a substitution cipher… plug it into a program, ez
+- Alternatively, manually find common words and figure out the substitution yourself…
+- IFONLYMODERNCRYPTOWASLIKETHIS
+Hash101
+- Level 1: give me the ASCII representation of 011011000110111101110110011001010110110001111001
+    - Plug it into a converter: lovely
+- Level 2: give the hex form of the above
+    - Use a ascii to hex converter
+    - Use a hex to binary converter
+- Level 3: give something to hash to a number
+    - duh
+- Level 4: Find string that would md5 hash to that value
+    - Check records of cracked md5 passwords
+- 8b95d8e7ccd0e41b8f989195443a9072
+computeAES
+- File contains a ciphertext and key for AES using ECB with base64
+- Decrypt using a basic python program
+    - decrypt.py
+    - #!/usr/bin/python from Crypto.Cipher import AES from base64 import b64decode   key = b64decode("6v3TyEgjUcQRnWuIhjdTBA==") ciphertext = b64decode("rW4q3swEuIOEy8RTIp/DCMdNPtdYopSRXKSLYnX9NQe8z+LMsZ6Mx/x8pwGwofdZ")  obj = AES.new(key, AES.MODE_ECB)   plaintext = obj.decrypt(ciphertext) print "Flag : %s" % plainrtext
+- OR a website can do the same thing just fine
+computeRSA
+- Well, the problem gives us the algorithm to decrypt as well as all the components to decrypt
+- Unfortunately, the numbers are a little too big for a calculator
+- While we can just use an online RSA decrypter to get the flag… we can also use python more simply
+- python
+- (150815) ** 1941 % 435979
+- 133337L
+
+
+Reverse Engineering
+Hex2Raw
+- cd /problems/bee57af2b16368039c96edaa1bd95826
+- ls
+    - Upon ls’ing we notice flag, input, and hex2raw
+    - Obviously flag and input are protected, but we can run and read hex2raw
+    - Running hex2raw, it asks us to decode a hex string to raw
+    - A quick online search tells us that python has a handy function to do that for us!
+- python -c ‘print “6a5c6fa9602a2d0f439953bcb6f4a611”.decode(“hex”)’ | ./hex2raw
+- d2ee728e47348dffdd9b654d3733a40a
+Raw2Hex
+- cd /problems/87c7dd790daa359b529f1a24e9f8763f
+- ls
+    - Upon ls’ing we notice flag and raw2hex
+    - Running raw2hex, it gives us the flag… but in raw form
+    - We can just cut off the part that is raw and convert it to plain form using xxd
+- ./raw2hex | cut -d ':' -f 2 | xxd -plain
+- f4f47fac37994a4dbe5e15b9c342891b0a
+
+
+Web Exploitation
+What is Web
+- This appears to be an introductory level to look through some source code
+- I use chrome’s inspector to read all the source code
+- The first part is in the HTML body of the page
+    - 9daca0510ff
+- The second part is in the CSS part of the page, hacker.css, which we can access through the head
+    - eb6c5680635
+- The last part is in the JS part of the page, script.js, which we can access through the body
+    - f1ef52d049f
+- 9daca0510ffeb6c5680635f1ef52d049f
+
+
+Binary Exploitation
+Bash Loop
+- cd /problems/e3f1970eb419b3aa32788a43ec91ef08
+- ls
+- ./bashloop
+    - It seems like this program wants us to guess a randomly selected number between 0 and 4096
+    - As the name implies, this is when we’ll be writing this competition’s first bash script!
+    - It’s a simple for loop, which we grep the flag out of the outputs
+- for i in {0..4096}
+- do
+- ./bashloop $i | grep flag
+- done
+- 9960332950d7db392f97f29dee04f4ee
+Just No
+- cd /problems/276fc27f3ef921f0e2f0f75ba95c9e60
+- ls
+    - Going to the problem folder, we see the files auth, flag, justno, and justno.c
+- ./justno
+- auth file says no. So no. Just... no.
+- cat auth
+- nano justno.c
+    - Based on the c file, it seems as though as long as the auth file reads no, the justno program won’t give us the flag
+    - But to read the auth file, the program interesting goes back two directories in the relative path and reads the auth file from there
+    - Luckily, this means all we have to do is recreate the directory form somewhere else and make our own auth
+- cd /home/username
+- mkdir problems
+- cd problems
+- mkdir 276fc27f3ef921f0e2f0f75ba95c9e60
+- cd 276fc27f3ef921f0e2f0f75ba95c9e60
+- nano auth
+- yes
+    - Now we just run the program from this directory and it should give us the flag!
+- /problems/276fc27f3ef921f0e2f0f75ba95c9e60/justno
+- 8661ca23ef68adc41d407817b8656dd0
+
+
+Misc
+Internet Kittens
+- Looks like they just want us to connect to an IP at a port, which we can do simply with netcat
+- nc shell2017.picoctf.com 12275
+- 1e1ccf22b278d35b1977c76bb66c5e30
+Piazza
+- They just want us to use their piazza page…
+- Connect and look at the post Welcome! where the flag is
+- flag{ask_and_hop3fully_we_can_help}
+Leaf of the Tree
+- Looks like there are a lot of directories in here! Maybe the flag is here too
+- Reveals the flag directory
+    - find | grep flag
+- Reflect the contents in the terminal
+    - cat ./trunk/trunkd091/trunkbf10/trunk4b0b/trunkb4d6/trunk5ba3/trunkd86e/trunka326/flag
+- 88636e09e72bafb444e7f6a8105dbc5d
+looong
+- Connecting to nc, it demands from us a ridiculous amount of characters
+- As the py hints, we can’t type that fast so we can use python to deliver our input instead!
+    - looong.py
+- But wait, it randomizes each time, which is why then hinted at multiple windows
+- In a separate window, I just need to type to get the proper input and paste it in
+    - python -c 'print "x"*744 + "3"'
+- That’s our flag!
+    - with_some_recognition_and_training_delusions_become_glimpses_493092611815c4e8f8eee8df7264c4c0
+Leaf of the Forest 
+- Apparently we can’t look for this one manually… not that I did that in Leaf of the tree anyway
+- Reveal the flag directory
+    - find | grep flag
+- Reflect the contents in the terminal
+    - cat ./forest/treefced1e/trunka090/trunk957d/trunk6de6/trunke68e/trunkf287/trunk070b/trunke47a/branch4c77/flag
+- b51adfb58ec99a8c81db853c7acdd7bd
+World Chat 
+- When we connect to shell2017.picoctf.com port 38798, we’re bombarded by a sea of messages
+- To cut back to messages with messages with just the flag, we can use grep!
+- nc shell2017.picoctf.com 38798 | grep flag
+- I’m noticing the only person who actually says anything about the flag is flagperson, so we adjust our command slightly to make it neater…
+- nc shell2017.picoctf.com 38798 | grep flagperson
+    - 05:45:27 flagperson: this is part 1/8 of the flag - 3572 05:45:28 flagperson: this is part 2/8 of the flag - dd03 05:45:32 flagperson: this is part 3/8 of the flag - 4e91 05:45:33 flagperson: this is part 4/8 of the flag - 5f49 05:45:34 flagperson: this is part 5/8 of the flag - 3120 05:45:35 flagperson: this is part 6/8 of the flag - 885d 05:45:37 flagperson: this is part 7/8 of the flag - 41d5 05:45:40 flagperson: this is part 8/8 of the flag - 46c7
+- 3572dd034e915f493120885d41d546c7
+
