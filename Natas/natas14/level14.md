@@ -1,0 +1,16 @@
+## Natas Level 14 → Level 15
+- Go to url: http://natas14.natas.labs.overthewire.org
+    - User: natas14
+    - Password: Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1
+- This time we need to log in!
+- Looking through the source code we can see some traces of SQL, a databasing language
+    - SQL usually means SQL injections, which are where the user is unwittingly allowed to inject arbitrary SQL code into the server's database
+- There are a few ways to do this, but for now we'll do a simple ""="" is always true
+    - Input
+        - Username: " OR ""="
+        - Password: " OR ""="
+    - Based on the source code it should appear to the SQL interpreter as 
+        - SELECT * from users where username="" OR ""="" and password="" OR ""=""
+    - When SQL is given an always true statement, it'll give back all the users instead of a specific one
+- Once we log in, it gives us the flag
+    - AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J

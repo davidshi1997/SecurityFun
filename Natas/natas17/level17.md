@@ -1,0 +1,12 @@
+## Natas Level 16 → Level 17
+- Go to url: http://natas17.natas.labs.overthewire.org
+    - User: natas17
+    - Password: 8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw
+- It's the username existence checking program again, but this time there's no feedback at all
+    - Luckily it's possible to do a time based SQL injection where we can treat the time taken to respond as the server's feedback
+- For example, suppose we sent 'natas18" AND password LIKE BINARY "%a%" AND sleep(10) #'
+    - If 'a' does exist in the pass, the response should take less than 10 seconds
+    - Else, it will take more than 10 seconds
+- Using this, let's interrogate the program with some slight modifications to our Python script!
+- After running our Python script, we obtain the password
+    - xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP

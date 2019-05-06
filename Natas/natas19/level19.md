@@ -1,0 +1,12 @@
+## Natas Level 18 → Level 19
+- Go to url: http://natas19.natas.labs.overthewire.org
+    - User: natas19
+    - Password: 4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs
+- The same login setup this time but no source code! Let's try to do some sleuthing to figure out what's changed
+- Logging in with user: admin password: password
+    - The PHPSESSID is much longer and looks like a hex number, which can often be decoded into ASCII
+        - Decoding 3335322d75736572 we get 352-admin
+    - This implies to generate the cookie, a number is generated, the username is appended, and then the whole thing is hex encoded
+    - Important to note is it seems as though the username is important in terms of the cookie, so we'll stick with admin for our logins here
+- With some slight modifications, our Python script works just fine
+    - eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF

@@ -1,0 +1,19 @@
+## Natas Level 12 → Level 13
+- Go to url: http://natas12.natas.labs.overthewire.org
+    - User: Natas12
+    - Password: EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3
+- It seems like this time, we're uploading an image
+- Going through a standard run through of the website, we upload the picture, which is put in as a random filename. It then takes us to a screen where it can be opened
+- Taking a look at the source code directly, there are two main points of interest
+    - The only checks are for file size
+        - That's great for us, lots of things can be done with tiny files!
+    - The server file extension is generated using a client side field
+        - Editing this, we can put in any kind of file to the server
+- All of this means we can easily put in some php code
+- We can assume that the password file is in a similar place as the bandit files
+- To make our fake jpeg
+    - echo "<?php echo system(\"cat /etc/natas_webpass/natas13\"); ?>" > totallyapicture.jpg
+- In addition to making a fake jpeg, it is important to make sure it's taken in as a php file
+    - All we have to do is change the hidden filename field to php instead of jpg
+- Upon uploading and clicking on the file, it'll execute and display the results of the php file
+    - jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY

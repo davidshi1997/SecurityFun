@@ -1,0 +1,13 @@
+## Natas Level 16 → Level 17
+- Go to url: http://natas16.natas.labs.overthewire.org
+    - User: natas16
+    - Password: WaIHEacj63wnNIBROHeqi3p9t0m5nhmh
+- This time we're given a program that let's us check if a word exists in a dictionary
+    - In the source code, we can see this is done with the grep command
+    - However, there are a few illegal characters that make it difficult to directly execute commands
+- Despite the illegal characters, we can execute code directly within quotes using $()
+    - However, we won't be able to see any of the results
+    - We can do something similar to the previous exercise, where we instead interrogate the file
+    - We choose a word that appears in the dictionary and append a grep of the password file. This way, if any result appears, the grep was not successful
+- Using a Python script similar to the previous problem we can easily get the password
+    - 8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw
