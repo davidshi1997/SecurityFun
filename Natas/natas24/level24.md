@@ -1,0 +1,11 @@
+## Natas Level 23 → Level 24
+- Go to url: http://natas24.natas.labs.overthewire.org
+    - User: natas24
+    - Password: OsRmXFguozKpTZZ5X14zNO43379LZveg
+- This one also has a password input field again
+- The source code is short this time without much to do except something to do with php's strcmp
+- I had no idea what to really do with the strcmp until I found some references that stated that strcmp returns 0 if something other than a string is given
+- To submit something other than a string, we just need to adjust the GET request parameters to an array like so
+    - http://natas24.natas.labs.overthewire.org/?passwd[]=
+- This gives us our password
+    - GHF6X7YwACaYYssHVY05cFq83hRktl4c

@@ -1,0 +1,13 @@
+## Natas Level 22 → Level 23
+- Go to url: http://natas23.natas.labs.overthewire.org
+    - User: natas23
+    - Password: D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE
+- This one simply has a password input field
+- In the source code, there are a two conditions on the password and then it'll show the next level
+    - It must contain 'iloveyou'
+    - It must be greater than 10
+- This one uses a bit of a strange mechanism involved with PHP string evaluation
+    - If the leftmost bit is a number, it will be evaluated as a number until it hits a character
+    - That means we can write a short number and iloveyou and be set
+- After submitting '101iloveyou' we get our password
+    - OsRmXFguozKpTZZ5X14zNO43379LZveg
